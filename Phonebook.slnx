@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Phonebook/Phonebook.vcxproj" />
+  <Project Path="PhonebookUnittests/PhonebookUnittests.vcxproj" />
+</Solution>
