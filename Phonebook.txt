@@ -1,0 +1,99 @@
+Phonebook
+
+Features Necessary:
+1. Add new entry
+2. Delete an entry
+3. Search and Edit an entry
+4. Search and display an entry
+5. Display a range of entries
+6. Display all the entries
+7. A search function
+8. Menu System
+9. Save data to disk
+10. load data from disk
+
+Functions Necessary: (if we want to do a linkedlist)
+1. Insert into LinkedList 
+2. Delete from LinkedList
+3. Search a LinkedList
+4. Edit a node in a LinkedList
+5. Display a node from a LinkedList
+6. Display main/sub menus
+7. An input function to take integers as input for menus and index inputs
+8. A string function to take strings as input, returning a dynamic string, and a size_t var
+9. A function to take a filepath and load the file into memory dynamically, performing the necessary formatting.
+10. A function to save the data structure into a file with the necessary format.
+
+Extra Features to consider:
+-Adding Color to Terminal (very easy)
+-Adding a different data structure (hashmap, tree) (harder) (if we do this we cannot do sorting, but searching will be faster)
+-Implementing sorting (harder)
+-Input validation (medium) (Phone numbers, postal codes are correctly formatted)
+-Duplicate protection (easy)
+-Partial Searches (searching 555 in phone numbers returns all phone numbers with that sequence of numbers) (medium)
+-Add Version control (harder) (store recent changes in a file to recall the most recent changes)
+-Add a birthday field and create a menu option for Upcoming birthdays (easy) (get current date and return all contacts within the range of 30 days
+
+Code Structure so far:
+-A double circular linkedlist - head points back to tail
+-A struct that contains all data per entry
+-Struct entries are all dynamic for dynamic string input
+-Code is separated into two types - frontend and backend
+-All backend functions will have unit tests
+-Backend function handle interaction with systems like files and the linkedlist
+-Frontend functions handle interactions the user and the backend
+-Backend has two layers - raw and functional
+-Raw backend handles the basics - adding, searching, sorting, displaying an entry by index, etc
+-Functional uses multiple raw function to add a layer of functionality - editing combines searching, adding, and deleting for reusablilty
+
+
+Functions Layout (so far) (subject to change):
+1. Insert into LinkedList 
+	-Inputs: 
+		int index: if -1 append to tail
+		struct node* newNode
+		struct node* head
+	-Returns true if passed; else false
+
+2. Delete from LinkedList
+	-Inputs: 
+		int index:
+		struct node* head
+		size_t* count; gets decremented if deletion succeeded
+	-Returns head no matter what
+
+3. Search a LinkedList
+	-Inputs:
+		const char* string
+		int field
+		struct node* head
+	-Returns -1 if not found and index if found
+		
+4. Edit a node in a LinkedList
+	-Inputs: (search then display then create new node then add and then delete old node)
+		const char* string
+		int field
+		struct node* head
+	-returns true or false
+
+5. Display a node from a LinkedList
+	-Inputs:
+		const char* string
+		int field
+		struct node* head
+	-Returns true or false (prints the contact information)
+
+6. Display main/sub menus
+
+7. An input function to take integers as input for menus and index inputs
+
+8. A string function to take strings as input, returning a dynamic string, and a size_t var
+
+9. A function to take a filepath and load the file into memory dynamically, performing the necessary formatting.
+
+10. A function to save the data structure into a file with the necessary format.
+
+
+
+
+
