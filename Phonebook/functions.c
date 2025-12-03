@@ -1,7 +1,8 @@
 #include "functions.h"
+#include "types.c"
 
 #include <stdbool.h>
-#include "types.c"
+#include <stdlib.h>
 
 bool append(List*, Entry*);
 bool prepend(List*, Entry*);
@@ -13,8 +14,12 @@ Entry* step_back_node(Node*, int);
 Entry* create_entry(String*, String*);
 
 Entry* create_entry(String* name, String* phone_number) {
-	// Implementation goes here
-	return NULL;
+	Entry* temp = malloc(sizeof *temp);
+	if (!temp) return NULL;
+	temp->name = name;
+	temp->phone_number = phone_number;
+
+	return temp;
 }
 
 bool append(List* list, Entry* entry) {
