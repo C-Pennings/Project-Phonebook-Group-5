@@ -1,16 +1,28 @@
-typedef struct {
-	char *data;
-	int length;
-} string;
+typedef struct String String;
+typedef struct Entry  Entry;
+typedef struct Node   Node;
+typedef struct List   List;
 
-struct Node {
-	struct string* value;
-	struct Node* next;
-	struct Node* prev;
+#include <stddef.h>
+
+struct String {
+    char* data;
+    size_t length;
 };
 
-typedef struct {
-	int length;
-	struct Node* head;
-} List;
+struct Entry {
+    String* name;
+    String* phone_number;
+};
 
+struct Node {
+    Entry* value;
+    Node* next;
+    Node* prev;
+};
+
+struct List {
+    size_t length;
+    Node* head;
+    Node* tail;
+};
