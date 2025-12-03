@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="functions.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="types.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="functions.h" />
