@@ -128,11 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="functions.c" />
+    <ClCompile Include="input.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="types.c" />
+    <ClCompile Include="types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="color.h" />
     <ClInclude Include="functions.h" />
+    <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
