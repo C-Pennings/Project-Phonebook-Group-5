@@ -1,4 +1,4 @@
-#include "types.h"
+#include "types.h" //Charlie coded this whole file
 #include <stdio.h>
 #include <stdlib.h>
 #include "input.h"

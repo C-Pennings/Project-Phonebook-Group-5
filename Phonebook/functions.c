@@ -1,4 +1,4 @@
-#include "functions.h" //Charlie did this file
+#include "functions.h" //Charlie coded this file
 #include "types.h"
 #include <stdbool.h>
 #include <stdlib.h>
