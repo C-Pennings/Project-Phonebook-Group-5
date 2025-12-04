@@ -92,6 +92,8 @@ Entry* step_node(Node* node, int steps) {
 }
 
 Entry* step_back_node(Node* node, int steps) {
-	// Implementation goes here
-	return NULL;
+	while (steps-- > 0) {
+		node = node->prev;
+	}
+	return node->value;
 }
