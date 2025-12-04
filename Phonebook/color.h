@@ -1,4 +1,4 @@
-﻿#pragma once
+﻿#pragma once //Charlie
 #ifndef COLORS_H
 #define COLORS_H
 
@@ -80,7 +80,7 @@ static inline void ENABLE_COLORS() {
 #define RGB_FG(r,g,b)   "\033[38;2;" #r ";" #g ";" #b "m"
 #define RGB_BG(r,g,b)   "\033[48;2;" #r ";" #g ";" #b "m"
 
-/* ─────────────────────────────── PURE ASCII PRESET COMBOS (NO UNICODE) ─────────────────────────────── */
+/* ─────────────────────────────── PURE ASCII PRESET COMBOS ─────────────────────────────── */
 #define SUCCESS     B_GREEN BOLD "[SUCCESS]" RESET " " B_GREEN
 #define ERROR       B_RED   BOLD "[ERROR]"   RESET " " B_RED
 #define WARNING     B_YELLOW BOLD "[WARNING]" RESET " " B_YELLOW

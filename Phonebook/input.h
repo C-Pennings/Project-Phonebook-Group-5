@@ -1,7 +1,7 @@
 #pragma once
-#include "types.c"
+#include "types.h"
 
-int input_number(const char* prompt, int min, int max);
-String* input_string(const char* prompt);
+//Charlie
+int input_number(int min, int max);
+String* input_string();
 void clear_input_buffer();
-
