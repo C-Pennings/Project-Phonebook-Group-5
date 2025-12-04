@@ -1,6 +1,7 @@
 #include "types.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "input.h"
 
 //used to take integer input within a specified range
 int input_number(int min, int max) { //Charlie
@@ -73,4 +74,5 @@ String* input_string() { //Charlie
 // used to clear the input buffer
 void clear_input_buffer() { //Charlie
 	while (getchar() != '\n');
+	return;
 }
