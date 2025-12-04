@@ -2,6 +2,7 @@
 #pragma once
 #include <stddef.h>
 
+//Charlie did all of this
 typedef struct String {
     char* data;
     size_t length;
