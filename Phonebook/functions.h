@@ -4,7 +4,7 @@
 bool append(List*, Entry*);
 bool prepend(List*, Entry*);
 int search(List*, String*, String*);
-bool delete(List*, int);
+void delete(List*, int);
 bool free_list(List*);
 Entry* step_node(Node*, int);
 Entry* step_back_node(Node*, int);

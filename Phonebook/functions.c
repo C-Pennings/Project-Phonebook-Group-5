@@ -1,99 +1,192 @@
 #include "functions.h"
 #include "types.c"
-
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
+// Use Everytime when creating any Entry for consistency
 Entry* create_entry(String* name, String* phone_number) {
-	Entry* temp = malloc(sizeof *temp);
-	if (!temp) return NULL;
-	temp->name = name;
-	temp->phone_number = phone_number;
-	return temp;
+    Entry* temp = malloc(sizeof * temp);
+    if (!temp) return NULL;
+    temp->name = name;
+    temp->phone_number = phone_number;
+    return temp;
 }
 
+// Used to append an Entry to the end of the list
 bool append(List* list, Entry* entry) {
-	list->tail->next = malloc(sizeof(Node)); // Allocate memory for the new node
-	if (!list->tail->next) return false; // Check for allocation failure
-	list->tail->next->prev = list->tail; // Set the previous pointer of the new node
-	list->tail = list->tail->next; // Move the tail pointer to the new node
-	list->tail->value = entry; // Set the value of the new node
-	list->tail->next = NULL; // Set the next pointer of the new node to NULL
-	list->length++; // Increment the length of the list
-	return true;
+    Node* new_node = malloc(sizeof(Node));
+    if (!new_node) return false;
+
+    new_node->value = entry;
+    new_node->next = NULL;
+
+    if (list->tail == NULL) {
+        // Case: list is empty
+        new_node->prev = NULL;
+        list->head = list->tail = new_node;
+    }
+    else {
+        // Case: list has nodes
+        new_node->prev = list->tail;
+        list->tail->next = new_node;
+        list->tail = new_node;
+    }
+
+    list->length++;
+    return true;
 }
 
+// Used to prepend an Entry to the start of the list
 bool prepend(List* list, Entry* entry) {
-	Node* new_node = malloc(sizeof(Node)); // Allocate memory for the new node
-	if (!new_node) return false; // Check for allocation failure
-	new_node->value = entry; // Set the value of the new node
-	new_node->next = list->head; // Set the next pointer of the new node to the current head
-	new_node->prev = NULL; // Set the previous pointer of the new node to NULL
-	list->head->prev = new_node; // Set the previous pointer of the current head to the new node
-	list->head = new_node; // Move the head pointer to the new node
-	list->length++; // Increment the length of the list
-	return true;
+    Node* new_node = malloc(sizeof(Node));
+    if (!new_node) return false;
+
+    new_node->value = entry;
+    new_node->next = list->head;
+    new_node->prev = NULL;
+
+    if (list->head == NULL) {
+        // Empty list case
+        list->head = list->tail = new_node;
+    }
+    else {
+        // Normal case
+        list->head->prev = new_node;
+        list->head = new_node;
+    }
+
+    list->length++;
+    return true;
 }
 
+// Used to search the list by any type, just specify 'n' or 'p' or any future value
+// In the future, consider using enums for type safety
+// In the future, create a compare function for partial matches
 int search(List* list, String* value, String* type) {
-	for (int i = 0; i < list->length; i++) {
-		Entry* entry = step_node(list->head, 1);
-		if (type->data[0] == 'n') { // Search by name
-			if (entry->name->length == value->length &&
-				strncmp(entry->name->data, value->data, value->length) == 0) {
-				return i;
-			}
-		} else if (type->data[0] == 'p') { // Search by phone number
-			if (entry->phone_number->length == value->length &&
-				strncmp(entry->phone_number->data, value->data, value->length) == 0) {
-				return i;
-			}
-		}
-	}
-	return -1;
+    Node* current = list->head;
+    int index = 0;
+
+    while (current != NULL) {
+        Entry* entry = current->value;
+
+        if (type->data[0] == 'n' || type->data[0] == 'N') {
+            // Search by name
+            if (entry->name->length == value->length &&
+                strncmp(entry->name->data, value->data, value->length) == 0) {
+                return index;
+            }
+        }
+        else if (type->data[0] == 'p' || type->data[0] == 'P') {
+            // Search by phone
+            if (entry->phone_number->length == value->length &&
+                strncmp(entry->phone_number->data, value->data, value->length) == 0) {
+                return index;
+            }
+        }
+
+        current = current->next;
+        index++;
+    }
+    return -1;  // Not found
 }
 
+// delete is a fully functional delete by index
 bool delete(List* list, int index) {
-	while (index-- > 0) {
-		list->head = list->head->next;
-	}
-	Node* to_delete = list->head;
-	if (to_delete->prev) {
-		to_delete->prev->next = to_delete->next;
-	} else {
-		list->head = to_delete->next;
-	}
-	if (to_delete->next) {
-		to_delete->next->prev = to_delete->prev;
-	} else {
-		list->tail = to_delete->prev;
-	}
-	free(to_delete->value);
-	free(to_delete);
-	list->length--;
-	return true;
+    if (index < 0 || index >= list->length || list->head == NULL) {
+        return false;  // Invalid index or empty list
+    }
+
+    Node* current = list->head;
+    int i = 0;
+
+    // Traverse to the target index
+    while (i < index) {
+        current = current->next;
+        i++;
+    }
+
+    // Unlink the node from the list
+    if (current->prev) {
+        current->prev->next = current->next;
+    }
+    else {
+        list->head = current->next;  // Deleting head
+    }
+
+    if (current->next) {
+        current->next->prev = current->prev;
+    }
+    else {
+        list->tail = current->prev;  // Deleting tail
+    }
+
+    if (current->value) {
+        if (current->value->name) {
+            free(current->value->name->data);     // Free the char* inside String
+            free(current->value->name);           // Free the String struct
+        }
+        if (current->value->phone_number) {
+            free(current->value->phone_number->data);
+            free(current->value->phone_number);
+        }
+        free(current->value);  // Free the Entry
+    }
+
+    free(current);  // Free the Node
+    list->length--;
+    return true;
 }
 
+// Fully deletes the entire data structure
 bool free_list(List* list) {
-	while (list->head) {
-		Node* temp = list->head;
-		list->head = list->head->next;
-		free(temp->value);
-		free(temp);
-	}
-	return true;
+    Node* current = list->head;
+
+    while (current != NULL) {
+        Node* next = current->next;
+
+        // Free Entry + Strings
+        if (current->value) {
+            if (current->value->name) {
+                free(current->value->name->data);
+                free(current->value->name);
+            }
+            if (current->value->phone_number) {
+                free(current->value->phone_number->data);
+                free(current->value->phone_number);
+            }
+            free(current->value);
+        }
+        free(current);
+        current = next;
+    }
+
+    list->head = list->tail = NULL;
+    list->length = 0;
+    return true;
 }
 
-Entry* step_node(Node* node, int steps) {
-	while (steps-- > 0) {
-		node = node->next;
-	}
-	return node->value;
+// used to get an entry by stepping forward n times
+Entry* step_node(Node* start, int steps) {
+    Node* current = start;
+    while (current != NULL && steps-- > 0) {
+        current = current->next;
+    }
+    return current ? current->value : NULL;
 }
 
-Entry* step_back_node(Node* node, int steps) {
-	while (steps-- > 0) {
-		node = node->prev;
-	}
-	return node->value;
+// used to get an entry by stepping backward n times
+Entry* step_back_node(Node* start, int steps) {
+    Node* current = start;
+    while (current != NULL && steps-- > 0) {
+        current = current->prev;
+    }
+    return current ? current->value : NULL;
+}
+
+// used to initialize a list
+void init_list(List* list) {
+    list->head = NULL;
+    list->tail = NULL;
+    list->length = 0;
 }
