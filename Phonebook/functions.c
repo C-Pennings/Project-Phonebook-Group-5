@@ -4,21 +4,11 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-bool append(List*, Entry*);
-bool prepend(List*, Entry*);
-int search(List*, String*, String*);
-bool delete(List*, int);
-bool free_list(List*);
-Entry* step_node(Node*, int);
-Entry* step_back_node(Node*, int);
-Entry* create_entry(String*, String*);
-
 Entry* create_entry(String* name, String* phone_number) {
 	Entry* temp = malloc(sizeof *temp);
 	if (!temp) return NULL;
 	temp->name = name;
 	temp->phone_number = phone_number;
-
 	return temp;
 }
 
