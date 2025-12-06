@@ -129,6 +129,7 @@ int main() {
 
 				int display_menu_input = input_number(1,3);
 				int display_index;
+				int display_max;
 
 				switch (display_menu_input) {
 					case 1: //One contact
@@ -144,6 +145,26 @@ int main() {
 						break;
 
 					case 2: //Range
+						if (contact_list->length < 1) {
+							printf(RED BOLD "You currently have no contacts.\n" RESET);
+							break;
+						}
+						if (contact_list->length < 2) {
+							printf(RED BOLD "You currently only have one contact.\n" RESET);
+							break;
+						}
+						printf("You currently have %d contacts.\n", (int)contact_list->length);
+						printf("At what position does your range start?: ");
+						display_index = input_number(1, ((int)contact_list->length - 1));
+						printf("At what position does your range end?: ");
+						display_max = input_number(display_index + 1, (int)contact_list->length);
+
+						for (int i = display_index; i <= display_max; i++) {
+							Entry* display_node = step_node(contact_list->head, i - 1);
+							printf(GREEN BOLD "Contact %d: %s, %s\n" RESET, i, display_node->name->data, display_node->phone_number->data);
+						}
+						printf("\n");
+
 						break;
 
 					case 3: //All
