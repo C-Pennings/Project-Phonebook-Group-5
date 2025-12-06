@@ -78,17 +78,23 @@ void clear_input_buffer() { //Charlie
 	return;
 }
 
+//Ask user if they are searching by name or phone number
 String* get_search_type() {
 	String* search_option;
 
+	//Ask user
 	printf("Enter 'n' to search by name, enter 'p' to search by phonenumber: ");
 	search_option = input_string();
 
+	//Check if entered string is a valid search type
 	bool verifying_search_type = true;
 	while (verifying_search_type) {
+		//If it is an accepted search type
 		if (search_option->data[0] == 'N' || search_option->data[0] == 'n' || search_option->data[0] == 'P' || search_option->data[0] == 'p') {
+			//Exit loop
 			verifying_search_type = false;
 		}
+		//Otherwise loop again.
 		else {
 			printf("Not a valid input.\n");
 			printf("Enter 'n' to search by name, enter 'p' to search by phonenumber: ");
@@ -96,5 +102,6 @@ String* get_search_type() {
 		}
 	}
 
+	//Return the search type
 	return search_option;
 }
