@@ -86,7 +86,7 @@ String* get_search_type() {
 
 	bool verifying_search_type = true;
 	while (verifying_search_type) {
-		if (search_option->data[0] == "N" || search_option->data[0] == "n" || search_option->data[0] == "P" || search_option->data[0] == "p") {
+		if (search_option->data[0] == 'N' || search_option->data[0] == 'n' || search_option->data[0] == 'P' || search_option->data[0] == 'p') {
 			verifying_search_type = false;
 		}
 		else {

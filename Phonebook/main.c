@@ -46,7 +46,7 @@ int main() {
 				Entry* new_contact = create_entry(contact_name, contact_number);
 				append(contact_list, new_contact);
 
-				printf("Added succesfully.\n\n");
+				printf(GREEN BOLD "Added succesfully.\n\n" RESET);
 
 				break;
 
@@ -70,11 +70,14 @@ int main() {
 				delete_index = search(contact_list, delete_search_value, delete_search_type);
 
 				if (delete(contact_list, delete_index)) {
-					printf("Contact successfully deleted.");
+					printf(GREEN BOLD "Contact successfully deleted.\n\n" RESET);
 				}
 				else {
-					printf("Could not find target index in list.");
+					printf(RED BOLD "Could not find target index in list.\n\n" RESET);
 				}
+
+				free(delete_search_value);
+				free(delete_search_type);
 
 				break;
 
@@ -96,7 +99,16 @@ int main() {
 				}
 
 				update_index = search(contact_list, update_search_value, update_search_type);
-				delete(contact_list, update_index);
+
+				if (delete(contact_list, update_index)) {
+					printf(GREEN BOLD "Original contact found and removed.\n\n" RESET);
+				}
+				else {
+					printf(RED BOLD "Original contact not found. Update failed.\n\n" RESET);
+					free(update_search_value);
+					free(update_search_type);
+					break;
+				}
 
 				printf("Enter updated contact name: ");
 				String* new_contact_name = input_string();
@@ -110,8 +122,34 @@ int main() {
 
 			case 4: //Display entries
 
-				printf("\nDisplay a range or a specific entry?\n");
-				//More menu
+				printf(BLUE BOLD "\n~Options for Displaying~\n" RESET);
+				printf("1) Display a specific contact.\n");
+				printf("2) Display a range of contacts.\n");
+				printf("3) Display all contacts.\n\n");
+
+				int display_menu_input = input_number(1,3);
+				int display_index;
+
+				switch (display_menu_input) {
+					case 1: //One contact
+						if (contact_list->length < 1) {
+							printf(RED BOLD "You currently have no contacts.\n" RESET);
+							break;
+						}
+						printf("You currently have %d contacts.\n", (int)contact_list->length);
+						printf("At what position is your desired contact?: ");
+						display_index = input_number(1, (int)contact_list->length);
+						Entry* display_node = step_node(contact_list->head, display_index-1);
+						printf(GREEN BOLD "Contact %d: %s, %s\n\n" RESET, display_index, display_node->name->data, display_node->phone_number->data);
+						break;
+
+					case 2: //Range
+						break;
+
+					case 3: //All
+						break;
+				}
+
 				break;
 
 			case 5: //Search
