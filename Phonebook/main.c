@@ -48,9 +48,17 @@ int main() {
 
 				break;
 
-			case 2: //Delete an entry
+			case 2: //Delete an entry, we can change this to a search for an index based of name/number
 
-				printf("\Deleting a contact...\n");
+				printf("\nDeleting a contact...\n");
+				printf("Enter index number of target entry: ");
+				int target_index = input_number(1, (int)sizeof(contact_list));
+				if (delete(contact_list, target_index)) {
+					printf("Contact successfully deleted.");
+				}
+				else {
+					printf("Could not find target index in list.");
+				}
 
 				break;
 
