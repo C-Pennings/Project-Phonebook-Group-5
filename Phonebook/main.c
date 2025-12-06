@@ -7,7 +7,7 @@
 
 
 int main() {
-	ENABLE_COLORS();
+	ENABLE_COLORS(); 
 
 	printf(GREEN BOLD "Input Test (1-100)" RESET "\n");
 	int test_str = input_number(1, 100);
