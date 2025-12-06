@@ -1,6 +1,5 @@
 #include "functions.h" //Charlie coded this file
 #include "types.h"
-#include "input.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -203,21 +202,4 @@ void init_list(List* list) {
     list->head = NULL;
     list->tail = NULL;
     list->length = 0;
-}
-
-String* get_search_type() {
-    bool getting_search_type = true;
-    String* search_option;
-    while (getting_search_type) {
-
-        printf("Enter 'n' to search by name, enter 'p' to search by phonenumber: ");
-        search_option = input_string();
-        if (search_option->data[0] == "N" || search_option->data[0] == "n" || search_option->data[0] == "P" || search_option->data[0] == "p") {
-            getting_search_type = false;
-        }
-        else {
-            printf("Not a valid input.\n");
-        }
-    }
-    return search_option;
 }

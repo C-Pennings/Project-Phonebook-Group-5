@@ -1,6 +1,7 @@
 #include "types.h" //Charlie coded this whole file
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "input.h"
 
 //used to take integer input within a specified range
@@ -75,4 +76,25 @@ String* input_string() { //Charlie
 void clear_input_buffer() { //Charlie
 	while (getchar() != '\n');
 	return;
+}
+
+String* get_search_type() {
+	String* search_option;
+
+	printf("Enter 'n' to search by name, enter 'p' to search by phonenumber: ");
+	search_option = input_string();
+
+	bool verifying_search_type = true;
+	while (verifying_search_type) {
+		if (search_option->data[0] == 'N' || search_option->data[0] == 'n' || search_option->data[0] == 'P' || search_option->data[0] == 'p') {
+			verifying_search_type = false;
+		}
+		else {
+			printf("Not a valid input.\n");
+			printf("Enter 'n' to search by name, enter 'p' to search by phonenumber: ");
+			search_option = input_string();
+		}
+	}
+
+	return search_option;
 }
