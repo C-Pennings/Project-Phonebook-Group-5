@@ -11,3 +11,4 @@ Entry* step_node(Node*, int);
 Entry* step_back_node(Node*, int);
 Entry* create_entry(String*, String*);
 void init_list(List* list);
+String* get_search_type();

@@ -34,7 +34,7 @@ int main() {
 		int menu_input = input_number(1, 6);
 
 		switch (menu_input) {
-			case 1: //Add a new entry
+			case 1: //Add a new entry, maybe add an option to add at start or end?
 
 				printf("\nAdding a new contact...\n");
 
@@ -48,11 +48,25 @@ int main() {
 
 				break;
 
-			case 2: //Delete an entry, we can change this to a search for an index based of name/number
+			case 2: //Delete an entry
 
 				printf("\nDeleting a contact...\n");
-				printf("Enter index number of target entry: ");
-				int target_index = input_number(1, (int)sizeof(contact_list));
+
+				int target_index;
+				String* search_value;
+				String* search_type = get_search_type();
+
+				if (search_type->data[0] == 'n' || search_type->data[0] == 'N') {
+					printf("Enter name of contact: ");
+					search_value = input_string();
+				}
+				else {
+					printf("Enter phonenumber of contact: ");
+					search_value = input_string();
+				}
+
+				target_index = search(contact_list, search_value, search_type);
+
 				if (delete(contact_list, target_index)) {
 					printf("Contact successfully deleted.");
 				}
@@ -65,6 +79,30 @@ int main() {
 			case 3: //Update an entry
 
 				printf("\nUpdating a contact...\n");
+
+				int target_index;
+				String* search_value;
+				String* search_type = get_search_type();
+
+				if (search_type->data[0] == 'n' || search_type->data[0] == 'N') {
+					printf("Enter name of contact: ");
+					search_value = input_string();
+				}
+				else {
+					printf("Enter phonenumber of contact: ");
+					search_value = input_string();
+				}
+
+				target_index = search(contact_list, search_value, search_type);
+				delete(contact_list, target_index);
+
+				printf("Enter updated contact name: ");
+				String* new_contact_name = input_string();
+				printf("Enter updated contact phonenumber: ");
+				String* new_contact_number = input_string();
+
+				Entry* updated_contact = create_entry(new_contact_name, new_contact_number);
+				append(contact_list, updated_contact);
 
 				break;
 
