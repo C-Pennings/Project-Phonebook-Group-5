@@ -52,6 +52,11 @@ int main() {
 
 			case 2: //Delete an entry
 
+				if (contact_list->length < 1) {
+					printf(RED BOLD "You currently have no contacts.\n\n" RESET);
+					break;
+				}
+
 				printf("\nDeleting a contact...\n");
 
 				int delete_index;
@@ -82,6 +87,11 @@ int main() {
 				break;
 
 			case 3: //Update an entry
+
+				if (contact_list->length < 1) {
+					printf(RED BOLD "You currently have no contacts.\n\n" RESET);
+					break;
+				}
 
 				printf("\nUpdating a contact...\n");
 
@@ -134,7 +144,7 @@ int main() {
 				switch (display_menu_input) {
 					case 1: //One contact
 						if (contact_list->length < 1) {
-							printf(RED BOLD "You currently have no contacts.\n" RESET);
+							printf(RED BOLD "You currently have no contacts.\n\n" RESET);
 							break;
 						}
 						printf("You currently have %d contacts.\n", (int)contact_list->length);
@@ -146,11 +156,11 @@ int main() {
 
 					case 2: //Range
 						if (contact_list->length < 1) {
-							printf(RED BOLD "You currently have no contacts.\n" RESET);
+							printf(RED BOLD "You currently have no contacts.\n\n" RESET);
 							break;
 						}
 						if (contact_list->length < 2) {
-							printf(RED BOLD "You currently only have one contact.\n" RESET);
+							printf(RED BOLD "You currently only have one contact.\n\n" RESET);
 							break;
 						}
 						printf("You currently have %d contacts.\n", (int)contact_list->length);
@@ -168,6 +178,17 @@ int main() {
 						break;
 
 					case 3: //All
+						if (contact_list->length < 1) {
+							printf(RED BOLD "You currently have no contacts.\n\n" RESET);
+							break;
+						}
+						printf("All contacts:\n");
+						for (int i = 1; i <= contact_list->length; i++) {
+							Entry* display_node = step_node(contact_list->head, i - 1);
+							printf(GREEN BOLD "Contact %d: %s, %s\n" RESET, i, display_node->name->data, display_node->phone_number->data);
+						}
+						printf("\n");
+
 						break;
 				}
 
