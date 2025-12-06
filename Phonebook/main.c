@@ -4,19 +4,129 @@
 #include "types.h"
 #include <stdlib.h>
 #include "input.h"
+#include "functions.h"
 
 
 int main() {
-	ENABLE_COLORS(); 
 
-	printf(GREEN BOLD "Input Test (1-100)" RESET "\n");
-	int test_str = input_number(1, 100);
-	if (test_str != NULL) {
-		printf("You entered: " CYAN BOLD "%d" RESET "\n", test_str);
+	ENABLE_COLORS();
 
-	} else {
-		printf(RED BOLD "Failed to read input integer." RESET "\n");
+	//Initialize main list
+	List* contact_list = (List*)malloc(sizeof(List));
+	if (!contact_list) {
+		return -1; //Memory allocation failure.
+	}
+	init_list(contact_list);
+
+	bool continue_program = true;
+
+	while (continue_program) {
+
+		printf(BLUE BOLD "~~~Welcome to Your Phone Directory!~~~" RESET "\n");
+		printf("Enter a number corresponding with the action you wish to take.\n");
+		printf(BLUE BOLD "1) " RESET "Add a new contact.\n");
+		printf(BLUE BOLD "2) " RESET "Delete a contact.\n");
+		printf(BLUE BOLD "3) " RESET "Update a contact.\n");
+		printf(BLUE BOLD "4) " RESET "Display contacts.\n"); //Will have a sub-menu
+		printf(BLUE BOLD "5) " RESET "Search for an contact.\n");
+		printf(BLUE BOLD "6) " RESET "Exit program.\n\n");
+
+		int menu_input = input_number(1, 6);
+
+		switch (menu_input) {
+			case 1: //Add a new entry, maybe add an option to add at start or end?
+
+				printf("\nAdding a new contact...\n");
+
+				printf("Enter contact name: ");
+				String* contact_name = input_string();
+				printf("Enter contact phone number: ");
+				String* contact_number = input_string();
+
+				Entry* new_contact = create_entry(contact_name, contact_number);
+				append(contact_list, new_contact);
+
+				break;
+
+			case 2: //Delete an entry
+
+				printf("\nDeleting a contact...\n");
+
+				int target_index;
+				String* search_value;
+				String* search_type = get_search_type();
+
+				if (search_type->data[0] == 'n' || search_type->data[0] == 'N') {
+					printf("Enter name of contact: ");
+					search_value = input_string();
+				}
+				else {
+					printf("Enter phonenumber of contact: ");
+					search_value = input_string();
+				}
+
+				target_index = search(contact_list, search_value, search_type);
+
+				if (delete(contact_list, target_index)) {
+					printf("Contact successfully deleted.");
+				}
+				else {
+					printf("Could not find target index in list.");
+				}
+
+				break;
+
+			case 3: //Update an entry
+
+				printf("\nUpdating a contact...\n");
+
+				int target_index;
+				String* search_value;
+				String* search_type = get_search_type();
+
+				if (search_type->data[0] == 'n' || search_type->data[0] == 'N') {
+					printf("Enter name of contact: ");
+					search_value = input_string();
+				}
+				else {
+					printf("Enter phonenumber of contact: ");
+					search_value = input_string();
+				}
+
+				target_index = search(contact_list, search_value, search_type);
+				delete(contact_list, target_index);
+
+				printf("Enter updated contact name: ");
+				String* new_contact_name = input_string();
+				printf("Enter updated contact phonenumber: ");
+				String* new_contact_number = input_string();
+
+				Entry* updated_contact = create_entry(new_contact_name, new_contact_number);
+				append(contact_list, updated_contact);
+
+				break;
+
+			case 4: //Display entries
+
+				printf("\nDisplay a range or a specific entry?\n");
+				//More menu
+				break;
+
+			case 5: //Search
+
+				printf("\nSearching for a contact...\n");
+
+				break;
+
+			case 6: //exit
+
+				printf("\nExiting program...\n");
+				continue_program = false;
+
+				break;
+		}
 	}
 
+	free_list(contact_list);
 	return 0;
 }
