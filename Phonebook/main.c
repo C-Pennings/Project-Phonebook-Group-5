@@ -46,28 +46,30 @@ int main() {
 				Entry* new_contact = create_entry(contact_name, contact_number);
 				append(contact_list, new_contact);
 
+				printf("Added succesfully.\n\n");
+
 				break;
 
 			case 2: //Delete an entry
 
 				printf("\nDeleting a contact...\n");
 
-				int target_index;
-				String* search_value;
-				String* search_type = get_search_type();
+				int delete_index;
+				String* delete_search_value;
+				String* delete_search_type = get_search_type();
 
-				if (search_type->data[0] == 'n' || search_type->data[0] == 'N') {
+				if (delete_search_type->data[0] == 'n' || delete_search_type->data[0] == 'N') {
 					printf("Enter name of contact: ");
-					search_value = input_string();
+					delete_search_value = input_string();
 				}
 				else {
 					printf("Enter phonenumber of contact: ");
-					search_value = input_string();
+					delete_search_value = input_string();
 				}
 
-				target_index = search(contact_list, search_value, search_type);
+				delete_index = search(contact_list, delete_search_value, delete_search_type);
 
-				if (delete(contact_list, target_index)) {
+				if (delete(contact_list, delete_index)) {
 					printf("Contact successfully deleted.");
 				}
 				else {
@@ -80,21 +82,21 @@ int main() {
 
 				printf("\nUpdating a contact...\n");
 
-				int target_index;
-				String* search_value;
-				String* search_type = get_search_type();
+				int update_index;
+				String* update_search_value;
+				String* update_search_type = get_search_type();
 
-				if (search_type->data[0] == 'n' || search_type->data[0] == 'N') {
+				if (update_search_type->data[0] == 'n' || update_search_type->data[0] == 'N') {
 					printf("Enter name of contact: ");
-					search_value = input_string();
+					update_search_value = input_string();
 				}
 				else {
 					printf("Enter phonenumber of contact: ");
-					search_value = input_string();
+					update_search_value = input_string();
 				}
 
-				target_index = search(contact_list, search_value, search_type);
-				delete(contact_list, target_index);
+				update_index = search(contact_list, update_search_value, update_search_type);
+				delete(contact_list, update_index);
 
 				printf("Enter updated contact name: ");
 				String* new_contact_name = input_string();
