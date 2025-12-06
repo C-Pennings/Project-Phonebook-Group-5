@@ -27,8 +27,8 @@ bool append(List* list, Entry* entry) {
         list->head = list->tail = new_node;
     }
     else {
-        // Case: list has nodes
         new_node->prev = list->tail;
+        // Case: list has nodes
         list->tail->next = new_node;
         list->tail = new_node;
     }
@@ -182,6 +182,19 @@ Entry* step_back_node(Node* start, int steps) {
         current = current->prev;
     }
     return current ? current->value : NULL;
+}
+
+Entry* get_entry_at(List* list, int index) {
+    if (index < 0 || index >= list->length) {
+        return NULL;  // Invalid index
+    }
+    Node* current = list->head;
+    int i = 0;
+    while (i < index) {
+        current = current->next;
+        i++;
+    }
+    return current->value;
 }
 
 // used to initialize a list
