@@ -132,6 +132,11 @@ int main() {
 
 			case 4: //Display entries
 
+				if (contact_list->length < 1) {
+					printf(RED BOLD "You currently have no contacts.\n\n" RESET);
+					break;
+				}
+
 				printf(BLUE BOLD "\n~Options for Displaying~\n" RESET);
 				printf("1) Display a specific contact.\n");
 				printf("2) Display a range of contacts.\n");
@@ -143,10 +148,6 @@ int main() {
 
 				switch (display_menu_input) {
 					case 1: //One contact
-						if (contact_list->length < 1) {
-							printf(RED BOLD "You currently have no contacts.\n\n" RESET);
-							break;
-						}
 						printf("You currently have %d contacts.\n", (int)contact_list->length);
 						printf("At what position is your desired contact?: ");
 						display_index = input_number(1, (int)contact_list->length);
@@ -155,12 +156,8 @@ int main() {
 						break;
 
 					case 2: //Range
-						if (contact_list->length < 1) {
-							printf(RED BOLD "You currently have no contacts.\n\n" RESET);
-							break;
-						}
 						if (contact_list->length < 2) {
-							printf(RED BOLD "You currently only have one contact.\n\n" RESET);
+							printf(RED BOLD "You currently only have one contact, not enough for a range.\n\n" RESET);
 							break;
 						}
 						printf("You currently have %d contacts.\n", (int)contact_list->length);
@@ -178,10 +175,6 @@ int main() {
 						break;
 
 					case 3: //All
-						if (contact_list->length < 1) {
-							printf(RED BOLD "You currently have no contacts.\n\n" RESET);
-							break;
-						}
 						printf("All contacts:\n");
 						for (int i = 1; i <= contact_list->length; i++) {
 							Entry* display_node = step_node(contact_list->head, i - 1);
@@ -196,7 +189,36 @@ int main() {
 
 			case 5: //Search
 
+				if (contact_list->length < 1) {
+					printf(RED BOLD "You currently have no contacts.\n\n" RESET);
+					break;
+				}
+
 				printf("\nSearching for a contact...\n");
+				printf("You currently have %d contacts.\n", (int)contact_list->length);
+
+				int search_index;
+				String* search_value;
+				String* search_type = get_search_type();
+
+				if (search_type->data[0] == 'n' || search_type->data[0] == 'N') {
+					printf("Enter name of contact: ");
+					search_value = input_string();
+				}
+				else {
+					printf("Enter phonenumber of contact: ");
+					search_value = input_string();
+				}
+
+				search_index = search(contact_list, search_value, search_type);
+
+				if (search_index == -1) {
+					printf(RED BOLD "No results.\n\n" RESET);
+					break;
+				}
+
+				Entry* search_target_node = step_node(contact_list->head, search_index);
+				printf(GREEN BOLD "Contact %d: %s, %s\n\n" RESET, search_index+1, search_target_node->name->data, search_target_node->phone_number->data);
 
 				break;
 
