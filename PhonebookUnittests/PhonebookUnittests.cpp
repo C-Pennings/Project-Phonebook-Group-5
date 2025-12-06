@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "../Phonebook/main.c"
+#include "../Phonebook/main.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -12,6 +12,7 @@ namespace PhonebookUnittests
 		
 		TEST_METHOD(TestMethod1)
 		{
+
 		}
 	};
 }
