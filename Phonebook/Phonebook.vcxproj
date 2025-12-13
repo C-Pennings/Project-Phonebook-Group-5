@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="File_IO.c" />
     <ClCompile Include="functions.c" />
     <ClCompile Include="input.c" />
     <ClCompile Include="main.c" />
@@ -134,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="color.h" />
+    <ClInclude Include="File_io.h" />
     <ClInclude Include="functions.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
