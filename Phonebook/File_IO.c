@@ -15,15 +15,12 @@ bool open_mode(const char* filename, const char* mode) {
 
     return true;
 }
-bool write_to_data(FILE* file, const char* string, int data) {
-
-
-}
+//bool write_to_data(FILE* file, const char* string, int data) {}
 char* read_x_data(FILE* file, int target_line, int target_index) {
 #define MAX_LINE_LENGTH 1024 
     char line_buffer[MAX_LINE_LENGTH];
     char* token;
-    char* saveptr;
+    char* context;
     int current_index = 0;
     char* result_word = NULL;
     if (!file || target_line <= 0 || target_index <= 0 || target_index >= 5) { //5 pieces of data ie. name,number,food,drink,address
@@ -47,7 +44,7 @@ char* read_x_data(FILE* file, int target_line, int target_index) {
     if (len > 0 && line_buffer[len - 1] == '\n') {
         line_buffer[len - 1] = '\0';
     }
-    token = strtok_r(line_buffer, ",", &saveptr);
+    token = strtok_s(line_buffer, ",", &context);
     while (token != NULL) {
         //is a word at index
         if (current_index == target_index) {
@@ -55,7 +52,7 @@ char* read_x_data(FILE* file, int target_line, int target_index) {
             result_word = (char*)malloc(token_len + 1);
 
             if (result_word != NULL) {
-                strncpy(result_word, token, token_len);
+                strncpy_s(result_word,sizeof(result_word), token, token_len);
                 result_word[token_len] = '\0';
             }
             return result_word;
@@ -64,12 +61,12 @@ char* read_x_data(FILE* file, int target_line, int target_index) {
         if (current_index >= 5) {
             break;
         }
-        token = strtok_r(NULL, ",", &saveptr);
+        token = strtok_s(NULL, ",", &context);
     }
     return NULL;
 }
 //rewrite the log// change int to appropriate data type
 
-bool rewrite(const char* filename, int head) {}
+//bool rewrite(const char* filename, int head) {}
 
 
