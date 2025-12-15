@@ -275,7 +275,7 @@ bool checkString(String* str, String* pattern){
 		if (pattern->data[i] == '?') {
             continue; // '?' matches any character
         }
-        else if (isDigit(pattern->data[i]) != isDigit(str->data[i])) {
+        else if (isdigit(pattern->data[i]) != isdigit(str->data[i])) {
             return false;
         }    
 	}
