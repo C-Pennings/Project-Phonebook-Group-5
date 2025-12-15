@@ -266,11 +266,27 @@ void load_entries(List* list,FILE* file) {
     char line[1024];
     int line_num= 0;
         while (fgets(line, sizeof(line), file) != NULL) {
-            String* contact_name = read_x_data(file, line_num, 1);
-            String* contact_number= read_x_data(file, line_num, 2);
+            char* contact_name = read_x_data( line_num, 0);
+            char* contact_number= read_x_data(line_num, 1);
             Entry* new_contact = create_entry(contact_name, contact_number);
             append(list, new_contact);
         
             line_num++;
         }
+}
+void save_contacts(List*list,FILE* file) {
+    for (int i = 1; i <= list->length; i++) {
+        Entry* display_node = step_node(list->head, i - 1);
+        char* name = display_node->name->data;
+        char* number = display_node->phone_number->data;
+        fprintf(file, "%s, %s\n",name,number);
+    }
+
+}
+String str_from_char(char* word) {
+    String s;
+    s.length = strlen(word);
+    s.data = malloc(s.length + 1);   // +1 for '\0'
+    memcpy(s.data, word, s.length + 1);
+    return s;
 }

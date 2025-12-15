@@ -17,3 +17,6 @@ String* get_search_type();
 bool A_Contains_B(String*,String*);
 void free_temp_list(List*);
 void load_entries(List*, FILE*);
+void save_contacts(List* list, FILE* file);
+bool con_run();
+String str_from_char(char*);

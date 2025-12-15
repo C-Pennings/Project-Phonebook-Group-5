@@ -12,13 +12,6 @@ int main() {
 
 	ENABLE_COLORS();
 
-	FILE* contact_log = open_mode("contact_log.txt", "r");
-	if (contact_log) {
-		fclose(contact_log);
-	}
-	else {
-		
-	}
 	//Initialize main list
 	List* contact_list = (List*)malloc(sizeof(List));
 	List* temp_list= (List*)malloc(sizeof(List));
@@ -27,6 +20,16 @@ int main() {
 	}
 	init_list(contact_list);
 	init_list(temp_list);
+	
+
+	FILE* contact_log = open_mode("contact_log.txt", "r");
+	if (contact_log) {
+		load_entries(contact_list, contact_log);
+		fclose(contact_log);
+	}
+	else {
+		//fclose(contact_log);
+	}
 	
 	//load_entries(contact_log, contact_list);
 
@@ -255,7 +258,14 @@ int main() {
 				break;
 		}
 	}
-
+	contact_log = open_mode("contact_log.txt", "w");
+	if (contact_log) {
+		save_contacts(contact_list,contact_log);
+		fclose(contact_log);
+	}
+	else {
+		//fclose(contact_log);
+	}
 	free_list(contact_list);
 	free_list(temp_list);
 	return 0;
