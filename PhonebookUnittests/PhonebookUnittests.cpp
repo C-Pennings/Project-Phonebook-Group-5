@@ -6,11 +6,124 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace PhonebookUnittests
 {
-	TEST_CLASS(PhonebookUnittests)
+	//Contains tests for functions in the functions.c file
+	TEST_CLASS(FunctionsUnitTests)
 	{
 	public:
 		
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(create_entry_test)
+		{
+
+		}
+
+		TEST_METHOD(append_test)
+		{
+
+		}
+
+		TEST_METHOD(prepend_test)
+		{
+
+		}
+
+		TEST_METHOD(search_test)
+		{
+
+		}
+
+		TEST_METHOD(delete_test)
+		{
+
+		}
+
+		TEST_METHOD(free_list_test)
+		{
+
+		}
+
+		TEST_METHOD(step_node_test)
+		{
+
+		}
+
+		TEST_METHOD(step_back_node_test)
+		{
+
+		}
+
+		TEST_METHOD(get_entry_at_test)
+		{
+
+		}
+
+		TEST_METHOD(init_list_test)
+		{
+
+		}
+
+		TEST_METHOD(A_Contains_B_test)
+		{
+
+		}
+
+		TEST_METHOD(search_all_test)
+		{
+
+		}
+
+		TEST_METHOD(free_temp_list_test)
+		{
+
+		}
+
+		TEST_METHOD(con_run_test)
+		{
+
+		}
+
+		TEST_METHOD(checkString_test)
+		{
+
+		}
+	};
+
+	//Contains tests for functions in the input.c file
+	TEST_CLASS(InputUnitTests)
+	{
+	public:
+
+		TEST_METHOD(input_number_test)
+		{
+
+		}
+
+		TEST_METHOD(input_string_test)
+		{
+
+		}
+
+		TEST_METHOD(clear_input_buffer_test)
+		{
+
+		}
+
+		TEST_METHOD(get_search_type_test)
+		{
+
+		}
+	};
+
+	//Contains tests for functions in the File_IO.c file
+	TEST_CLASS(FileIOUnitTests)
+	{
+	public:
+
+		TEST_METHOD(open_mode_test)
+		{
+
+		}
+
+		TEST_METHOD(read_x_data_test)
 		{
 
 		}
