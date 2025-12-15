@@ -1,6 +1,28 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../Phonebook/main.h"
+#include <ctype.h>
+
+extern "C" typedef struct String;
+extern "C" typedef struct Entry;
+extern "C" typedef struct Node;
+extern "C" typedef struct List;
+
+extern "C" bool append(List*, Entry*);
+extern "C" bool prepend(List*, Entry*);
+extern "C" int search(List*, String*, String*);
+extern "C" void search_all(List*, List*, String*, String*);
+extern "C" bool delete(List*, int);
+extern "C" bool free_list(List*);
+extern "C" Entry* step_node(Node*, int);
+extern "C" Entry* step_back_node(Node*, int);
+extern "C" Entry* create_entry(String*, String*);
+extern "C" void init_list(List* list);
+extern "C" String* get_search_type();
+extern "C" bool A_Contains_B(String*, String*);
+extern "C" void free_temp_list(List*);
+extern "C" bool checkString(String* str, String* pattern);
+extern "C" bool con_run();
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
