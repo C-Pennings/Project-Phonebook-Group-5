@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "input.h"
 #include "functions.h"
+#include "File_io.h"
 
 
 int main() {
@@ -13,10 +14,12 @@ int main() {
 
 	//Initialize main list
 	List* contact_list = (List*)malloc(sizeof(List));
-	if (!contact_list) {
+	List* temp_list= (List*)malloc(sizeof(List));
+	if (!contact_list||!temp_list) {
 		return -1; //Memory allocation failure.
 	}
 	init_list(contact_list);
+	init_list(temp_list);
 
 	//Begin main program loop.
 	bool continue_program = true;
@@ -28,7 +31,7 @@ int main() {
 		printf(BLUE BOLD "1) " RESET "Add a new contact.\n");
 		printf(BLUE BOLD "2) " RESET "Delete a contact.\n");
 		printf(BLUE BOLD "3) " RESET "Update a contact.\n");
-		printf(BLUE BOLD "4) " RESET "Display contact(s).\n"); //Has a sub-menu
+		printf(BLUE BOLD "4) " RESET "Display contacts.\n"); //Will have a sub-menu
 		printf(BLUE BOLD "5) " RESET "Search for a contact.\n");
 		printf(BLUE BOLD "6) " RESET "Exit program.\n\n");
 
@@ -38,23 +41,22 @@ int main() {
 		//Evaluate user input
 		switch (menu_input) {
 			case 1: //Add a new entry, maybe add an option to add at start or end?
+				; bool keep_add = true;
+				while (keep_add) {
+					 printf("\nAdding a new contact...\n");
 
-				printf("\nAdding a new contact...\n");
+					printf("Enter contact name: ");
+					String* contact_name = input_string();
+					printf("Enter contact phone number: ");
+					String* contact_number = input_string();
 
-				//Get name and number to add.
-				printf("Enter contact name: ");
-				String* contact_name = input_string();
-				printf("Enter contact phone number: ");
-				String* contact_number = input_string();
+					Entry* new_contact = create_entry(contact_name, contact_number);
+					append(contact_list, new_contact);
 
-				//Create an entry with user input, then append it to the main list.
-				Entry* new_contact = create_entry(contact_name, contact_number);
-				append(contact_list, new_contact);
-
-				//Let the user know it has succeeded.
-				printf(GREEN BOLD "Added succesfully.\n\n" RESET);
-
-				//Restart main program loop.
+					printf(GREEN BOLD "Added succesfully.\n\n" RESET);
+					printf("continue adding contacts?\n");
+					keep_add = con_run();
+				}
 				break;
 
 
@@ -280,19 +282,28 @@ int main() {
 					printf("Enter phonenumber of contact: ");
 					search_value = input_string();
 				}
-
-				//Use name/phone number to find index 
+				search_all(contact_list, temp_list, search_value, search_type);
+				if (temp_list->length == 0) {
+					printf(RED BOLD "No search matches.\n\n" RESET);
+				}
+				else {
+					for (int i = 1; i <= temp_list->length; i++) {
+						Entry* display_node = step_node(temp_list->head, i - 1);
+						printf(CYAN BOLD "Contact Match %d: %s, %s\n" RESET, i, display_node->name->data, display_node->phone_number->data);
+					}
+				}
+				free_temp_list(temp_list);
 				search_index = search(contact_list, search_value, search_type);
 
 				//If nothing was found then display error and restart main program loop.
 				if (search_index == -1) {
-					printf(RED BOLD "No results.\n\n" RESET);
+					printf(RED BOLD "No exact matches.\n\n" RESET);
 					break;
 				}
 
 				//Go through list until at the correct index, then display data at that node
 				Entry* search_target_node = step_node(contact_list->head, search_index);
-				printf(GREEN BOLD "Contact %d: %s, %s\n\n" RESET, search_index+1, search_target_node->name->data, search_target_node->phone_number->data);
+				printf(GREEN BOLD "Exact match %d: %s, %s\n\n" RESET, search_index+1, search_target_node->name->data, search_target_node->phone_number->data);
 
 				//Restart main program loop.
 				break;

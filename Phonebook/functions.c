@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include "input.h"
+#include <ctype.h>
 
 // Use Everytime when creating any Entry for consistency
 Entry* create_entry(String* name, String* phone_number) {
@@ -27,8 +29,8 @@ bool append(List* list, Entry* entry) {
         list->head = list->tail = new_node;
     }
     else {
-        // Case: list has nodes
         new_node->prev = list->tail;
+        // Case: list has nodes
         list->tail->next = new_node;
         list->tail = new_node;
     }
@@ -66,16 +68,20 @@ bool prepend(List* list, Entry* entry) {
 int search(List* list, String* value, String* type) {
     Node* current = list->head;
     int index = 0;
+    bool contains=false;
 
     while (current != NULL) {
         Entry* entry = current->value;
 
         if (type->data[0] == 'n' || type->data[0] == 'N') {
             // Search by name
-            if (entry->name->length == value->length &&
+           
+           if (entry->name->length == value->length &&
                 strncmp(entry->name->data, value->data, value->length) == 0) {
                 return index;
             }
+           
+         
         }
         else if (type->data[0] == 'p' || type->data[0] == 'P') {
             // Search by phone
@@ -184,9 +190,93 @@ Entry* step_back_node(Node* start, int steps) {
     return current ? current->value : NULL;
 }
 
+Entry* get_entry_at(List* list, int index) {
+    if (index < 0 || index >= list->length) {
+        return NULL;  // Invalid index
+    }
+    Node* current = list->head;
+    int i = 0;
+    while (i < index) {
+        current = current->next;
+        i++;
+    }
+    return current->value;
+}
+
 // used to initialize a list
 void init_list(List* list) {
     list->head = NULL;
     list->tail = NULL;
     list->length = 0;
+}
+
+//
+bool A_Contains_B(String* string_one, char* string_two) {
+    
+    if (!string_one|| !string_two) {
+       return false;
+    }
+    return strstr(string_one->data, string_two) != NULL;
+
+}
+void search_all(List* list,List* temp, String* value, String* type) {
+    Node* current = list->head;
+    Node* temp_pnt = temp->head;
+    int index = 0;
+    bool contains = false;
+
+    while (current != NULL) {
+        Entry* entry = current->value;
+
+        if (type->data[0] == 'n' || type->data[0] == 'N') {
+            // Search by name
+       
+            if (A_Contains_B(entry->name, value->data)) {
+                append(temp,entry);
+            }
+        }
+        else if (type->data[0] == 'p' || type->data[0] == 'P') {
+            // Search by phone
+            if (A_Contains_B(entry->phone_number->data, value->data)) {
+                append(temp, entry);
+            }
+        
+        }
+
+        current = current->next;
+        index++;
+    }
+    //return -1;  // Not found
+}
+void free_temp_list(List* list) {
+   list->head = NULL;
+   list->tail = NULL;
+   list->length = 0;
+}
+bool con_run() {
+
+    printf("press 1 to continue,press 2 to return to menu\n");
+    int input = input_number(1, 2);
+    if (input == 1) {
+        return true;
+    }
+    return false;
+}
+
+bool checkString(String* str, String* pattern){
+    if (!str || !pattern) {
+        return false;
+    }
+    if (str->length != pattern->length) {
+        return false;
+    }
+    
+    for (size_t i = 0; i < str->length; i++) {
+		if (pattern->data[i] == '?') {
+            continue; // '?' matches any character
+        }
+        else if (isDigit(pattern->data[i]) != isDigit(str->data[i])) {
+            return false;
+        }    
+	}
 }
