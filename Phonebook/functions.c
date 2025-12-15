@@ -252,7 +252,7 @@ void free_temp_list(List* list) {
    list->tail = NULL;
    list->length = 0;
 }
-bool con_run() {
+bool con_run() { //continue to run
 
     printf("press 1 to continue,press 2 to return to menu\n");
     int input = input_number(1, 2);

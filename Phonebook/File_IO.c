@@ -4,16 +4,16 @@
 #include <string.h>
 #include "input.h"
 
-bool open_mode(const char* filename, const char* mode) {
+FILE* open_mode(const char* filename, const char* mode) {
     if (!filename || !mode) {
-        return false;
+        return NULL;
     }
     FILE* file = fopen(filename, mode);
     if (!file) {
-        return false;
+        return NULL;
     }
 
-    return true;
+    return  file;
 }
 //bool write_to_data(FILE* file, const char* string, int data) {}
 char* read_x_data(FILE* file, int target_line, int target_index) {
