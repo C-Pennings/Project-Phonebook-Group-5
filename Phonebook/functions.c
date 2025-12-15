@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "input.h"
+#include <ctype.h>
 
 // Use Everytime when creating any Entry for consistency
 Entry* create_entry(String* name, String* phone_number) {
@@ -260,4 +261,22 @@ bool con_run() {
         return true;
     }
     return false;
+}
+
+bool checkString(String* str, String* pattern){
+    if (!str || !pattern) {
+        return false;
+    }
+    if (str->length != pattern->length) {
+        return false;
+    }
+    
+    for (size_t i = 0; i < str->length; i++) {
+		if (pattern->data[i] == '?') {
+            continue; // '?' matches any character
+        }
+        else if (isDigit(pattern->data[i]) != isDigit(str->data[i])) {
+            return false;
+        }    
+	}
 }

@@ -15,3 +15,5 @@ void init_list(List* list);
 String* get_search_type();
 bool A_Contains_B(String*,String*);
 void free_temp_list(List*);
+bool checkString(String* str, String* pattern);
+bool con_run();
