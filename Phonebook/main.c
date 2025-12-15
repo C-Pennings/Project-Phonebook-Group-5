@@ -11,7 +11,14 @@
 int main() {
 
 	ENABLE_COLORS();
+
 	FILE* contact_log = open_mode("contact_log.txt", "r");
+	if (contact_log) {
+		fclose(contact_log);
+	}
+	else {
+		
+	}
 	//Initialize main list
 	List* contact_list = (List*)malloc(sizeof(List));
 	List* temp_list= (List*)malloc(sizeof(List));
@@ -20,6 +27,8 @@ int main() {
 	}
 	init_list(contact_list);
 	init_list(temp_list);
+	
+	//load_entries(contact_log, contact_list);
 
 	bool continue_program = true;
 
@@ -248,5 +257,6 @@ int main() {
 	}
 
 	free_list(contact_list);
+	free_list(temp_list);
 	return 0;
 }

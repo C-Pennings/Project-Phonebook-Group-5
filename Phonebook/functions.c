@@ -263,7 +263,7 @@ bool con_run() { //continue to run
     return false;
 }
 void load_entries(List* list,FILE* file) {
-    char line[1000];
+    char line[1024];
     int line_num= 0;
         while (fgets(line, sizeof(line), file) != NULL) {
             String* contact_name = read_x_data(file, line_num, 1);
