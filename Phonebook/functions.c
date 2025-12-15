@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "input.h"
+#include <stdio.h>
 
 // Use Everytime when creating any Entry for consistency
 Entry* create_entry(String* name, String* phone_number) {
@@ -260,4 +261,16 @@ bool con_run() { //continue to run
         return true;
     }
     return false;
+}
+void load_entries(List* list,FILE* file) {
+    char line[1000];
+    int line_num= 0;
+        while (fgets(line, sizeof(line), file) != NULL) {
+            String* contact_name = read_x_data(file, line_num, 1);
+            String* contact_number= read_x_data(file, line_num, 2);
+            Entry* new_contact = create_entry(contact_name, contact_number);
+            append(list, new_contact);
+        
+            line_num++;
+        }
 }

@@ -11,7 +11,7 @@
 int main() {
 
 	ENABLE_COLORS();
-
+	FILE* contact_log = open_mode("contact_log.txt", "r");
 	//Initialize main list
 	List* contact_list = (List*)malloc(sizeof(List));
 	List* temp_list= (List*)malloc(sizeof(List));
