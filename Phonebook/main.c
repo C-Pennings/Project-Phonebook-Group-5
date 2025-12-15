@@ -267,6 +267,8 @@ int main() {
 		//fclose(contact_log);
 	}
 	free_list(contact_list);
+	free(contact_list);
 	free_list(temp_list);
+	free(temp_list);
 	return 0;
 }
