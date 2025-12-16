@@ -1,6 +1,7 @@
 #pragma once //Charlie made this file
 #include <stdbool.h>
 #include "types.h"
+#include <stdio.h>
 
 bool append(List*, Entry*);
 bool prepend(List*, Entry*);
@@ -15,5 +16,9 @@ void init_list(List* list);
 String* get_search_type();
 bool A_Contains_B(String*,String*);
 void free_temp_list(List*);
+void load_entries(List*, FILE*);
+void save_contacts(List* list, FILE* file);
+bool con_run();
+String *create_string(char*);
 bool checkString(String* str, String* pattern);
 bool con_run();
