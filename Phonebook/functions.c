@@ -311,7 +311,7 @@ String* create_string(char* word) {
 
         return str;
     }
-
+}
 bool checkString(String* str, String* pattern){
     if (!str || !pattern) {
         return false;
