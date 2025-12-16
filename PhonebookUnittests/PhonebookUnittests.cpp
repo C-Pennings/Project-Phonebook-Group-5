@@ -212,7 +212,25 @@ namespace PhonebookUnittests
 
 		TEST_METHOD(step_back_node_test)
 		{
+			String* name2; name2->data = "Ted"; name2->length = sizeof(name2->data);
+			String* phone_number2; phone_number2->data = "123"; phone_number2->length = sizeof(phone_number2->data);
 
+			Entry* list_entry2; list_entry2->name = name2; list_entry2->phone_number = phone_number2;
+
+			Node* list_node2; list_node2->next = NULL; list_node2->value = list_entry2;
+
+
+
+			String* name1; name1->data = "Ted"; name1->length = sizeof(name1->data);
+			String* phone_number1; phone_number1->data = "123"; phone_number1->length = sizeof(phone_number1->data);
+
+			Entry* list_entry1; list_entry1->name = name1; list_entry1->phone_number = phone_number1;
+
+			Node* list_node1; list_node1->next = list_node2; list_node1->value = list_entry1;
+
+
+			Entry* stepped_node = step_back_node(list_node2, 1);
+			Assert::AreEqual(list_node1->value, stepped_node);
 		}
 
 		TEST_METHOD(get_entry_at_test)
