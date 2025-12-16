@@ -235,7 +235,22 @@ namespace PhonebookUnittests
 
 		TEST_METHOD(get_entry_at_test)
 		{
+			//Entry data already in list
+			String* name; name->data = "Ted"; name->length = sizeof(name->data);
+			String* phone_number; phone_number->data = "123"; phone_number->length = sizeof(phone_number->data);
 
+			//Entry already in list
+			Entry* list_entry; list_entry->name = name; list_entry->phone_number = phone_number;
+
+			//Node already in list
+			Node* list_node; list_node->next = NULL; list_node->value = list_entry;
+
+			
+			List* test_list; test_list->head = list_node; test_list->tail = list_node; test_list->length = 1;
+
+			Entry* searched_entry = get_entry_at(test_list,0);
+
+			Assert::AreEqual(list_entry, searched_entry);
 		}
 
 		TEST_METHOD(init_list_test)
