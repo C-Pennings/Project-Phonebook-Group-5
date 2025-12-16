@@ -119,7 +119,27 @@ namespace PhonebookUnittests
 
 		TEST_METHOD(search_test)
 		{
+			//Entry data already in list
+			String* name; name->data = "Ted"; name->length = sizeof(name->data);
+			String* phone_number; phone_number->data = "123"; phone_number->length = sizeof(phone_number->data);
 
+			//Entry already in list
+			Entry* list_entry; list_entry->name = name; list_entry->phone_number = phone_number;
+
+			//Node already in list
+			Node* list_node; list_node->next = NULL; list_node->value = list_entry;
+
+			//Make the list with a single node
+			List* test_list; test_list->head = list_node; test_list->tail = list_node; test_list->length = 1;
+
+
+
+			String* search_value; search_value->data = "Ted"; search_value->length = sizeof(search_value->data);
+			String* search_type; search_type->data = "n"; search_type->length = sizeof(search_type->data);
+
+			int test_index = search(test_list, search_value, search_type);
+
+			Assert::AreEqual(1, test_index);
 		}
 
 		TEST_METHOD(delete_test)
