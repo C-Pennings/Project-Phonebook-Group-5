@@ -22,3 +22,4 @@ bool con_run();
 String *create_string(char*);
 bool checkString(String* str, String* pattern);
 bool con_run();
+Entry* get_entry_at(List* list, int index);

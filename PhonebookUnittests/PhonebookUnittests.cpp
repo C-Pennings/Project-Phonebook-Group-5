@@ -189,27 +189,88 @@ namespace PhonebookUnittests
 
 		TEST_METHOD(step_node_test)
 		{
+			String* name2; name2->data = "Ted"; name2->length = sizeof(name2->data);
+			String* phone_number2; phone_number2->data = "123"; phone_number2->length = sizeof(phone_number2->data);
 
+			Entry* list_entry2; list_entry2->name = name2; list_entry2->phone_number = phone_number2;
+
+			Node* list_node2; list_node2->next = NULL; list_node2->value = list_entry2;
+
+
+
+			String* name1; name1->data = "Ted"; name1->length = sizeof(name1->data);
+			String* phone_number1; phone_number1->data = "123"; phone_number1->length = sizeof(phone_number1->data);
+
+			Entry* list_entry1; list_entry1->name = name1; list_entry1->phone_number = phone_number1;
+
+			Node* list_node1; list_node1->next = list_node2; list_node1->value = list_entry1;
+
+
+			Entry* stepped_node = step_node(list_node1, 1);
+			Assert::AreEqual(list_node2->value, stepped_node);
 		}
 
 		TEST_METHOD(step_back_node_test)
 		{
+			String* name2; name2->data = "Ted"; name2->length = sizeof(name2->data);
+			String* phone_number2; phone_number2->data = "123"; phone_number2->length = sizeof(phone_number2->data);
 
+			Entry* list_entry2; list_entry2->name = name2; list_entry2->phone_number = phone_number2;
+
+			Node* list_node2; list_node2->next = NULL; list_node2->value = list_entry2;
+
+
+
+			String* name1; name1->data = "Ted"; name1->length = sizeof(name1->data);
+			String* phone_number1; phone_number1->data = "123"; phone_number1->length = sizeof(phone_number1->data);
+
+			Entry* list_entry1; list_entry1->name = name1; list_entry1->phone_number = phone_number1;
+
+			Node* list_node1; list_node1->next = list_node2; list_node1->value = list_entry1;
+
+
+			Entry* stepped_node = step_back_node(list_node2, 1);
+			Assert::AreEqual(list_node1->value, stepped_node);
 		}
 
 		TEST_METHOD(get_entry_at_test)
 		{
+			//Entry data already in list
+			String* name; name->data = "Ted"; name->length = sizeof(name->data);
+			String* phone_number; phone_number->data = "123"; phone_number->length = sizeof(phone_number->data);
 
+			//Entry already in list
+			Entry* list_entry; list_entry->name = name; list_entry->phone_number = phone_number;
+
+			//Node already in list
+			Node* list_node; list_node->next = NULL; list_node->value = list_entry;
+
+			
+			List* test_list; test_list->head = list_node; test_list->tail = list_node; test_list->length = 1;
+
+			Entry* searched_entry = get_entry_at(test_list,0);
+
+			Assert::AreEqual(list_entry, searched_entry);
 		}
 
 		TEST_METHOD(init_list_test)
 		{
+			List* test_list;
+			init_list(test_list);
 
+			Assert::IsNull(test_list->head);
+			Assert::IsNull(test_list->tail);
+			Assert::AreEqual(0, (int)test_list->length);
 		}
 
 		TEST_METHOD(A_Contains_B_test)
 		{
+			String* string1; string1->data = "Hello"; string1->length = sizeof(string1->data);
+			String* string2; string2->data = "el"; string2->length = sizeof(string2->data);
 
+			bool test_check = A_Contains_B(string1, string2);
+
+			Assert::AreEqual(true, test_check);
 		}
 
 		TEST_METHOD(search_all_test)
