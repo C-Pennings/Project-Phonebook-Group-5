@@ -26,6 +26,7 @@ int main() {
 	if (contact_log) {
 		load_entries(contact_list, contact_log);
 		fclose(contact_log);
+		printf(GREEN BOLD "Loaded contacts from file successfully.\n\n" RESET);
 	}
 	else {
 		//fclose(contact_log);
@@ -334,6 +335,7 @@ int main() {
 	if (contact_log) {
 		save_contacts(contact_list,contact_log);
 		fclose(contact_log);
+		printf(GREEN BOLD "Saved contacts to file successfully.\n\n" RESET);
 	}
 	else {
 		//fclose(contact_log);

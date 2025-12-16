@@ -234,13 +234,13 @@ void search_all(List* list,List* temp, String* value, String* type) {
         if (type->data[0] == 'n' || type->data[0] == 'N') {
             // Search by name
        
-            if (A_Contains_B(entry->name, value->data)) {
+            if (A_Contains_B(entry->name, value)) {
                 append(temp,entry);
             }
         }
         else if (type->data[0] == 'p' || type->data[0] == 'P') {
             // Search by phone
-            if (A_Contains_B(entry->phone_number->data, value->data)) {
+            if (A_Contains_B(entry->phone_number, value)) {
                 append(temp, entry);
             }
         
@@ -273,6 +273,9 @@ void load_entries(List* list,FILE* file) {
             String *contact_name = create_string(temp_name);
             String *contact_number = create_string(temp_number);
 
+            free(temp_name);
+			free(temp_number);
+
             if (!contact_name || !contact_number) {
                 free(contact_name);
                 free(contact_number);
@@ -293,7 +296,6 @@ void save_contacts(List*list,FILE* file) {
 
 }
 String* create_string(char* word) {
-    {
         if (!word) return NULL;
 
         String* str = (String*)malloc(sizeof(String));
@@ -312,7 +314,7 @@ String* create_string(char* word) {
         return str;
     }
 
-bool checkString(String* str, String* pattern){
+bool checkString(String* str, String* pattern) {
     if (!str || !pattern) {
         return false;
     }
@@ -324,8 +326,9 @@ bool checkString(String* str, String* pattern){
 		if (pattern->data[i] == '?') {
             continue; // '?' matches any character
         }
-        else if (isDigit(pattern->data[i]) != isDigit(str->data[i])) {
+		else if (isalpha(pattern->data[i]) != isalpha(str->data[i])) {
             return false;
-        }    
+        }
 	}
+	return true;
 }
