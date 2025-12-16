@@ -255,7 +255,12 @@ namespace PhonebookUnittests
 
 		TEST_METHOD(init_list_test)
 		{
+			List* test_list;
+			init_list(test_list);
 
+			Assert::IsNull(test_list->head);
+			Assert::IsNull(test_list->tail);
+			Assert::AreEqual(0, (int)test_list->length);
 		}
 
 		TEST_METHOD(A_Contains_B_test)
