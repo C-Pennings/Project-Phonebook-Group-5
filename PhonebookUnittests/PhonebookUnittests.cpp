@@ -4,6 +4,7 @@
 #include "../Phonebook/functions.h"
 #include "../Phonebook/input.h"
 #include "../Phonebook/File_IO.h"
+#include <stdbool.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -144,7 +145,24 @@ namespace PhonebookUnittests
 
 		TEST_METHOD(delete_test)
 		{
+			//Entry data already in list
+			String* name; name->data = "Ted"; name->length = sizeof(name->data);
+			String* phone_number; phone_number->data = "123"; phone_number->length = sizeof(phone_number->data);
 
+			//Entry already in list
+			Entry* list_entry; list_entry->name = name; list_entry->phone_number = phone_number;
+
+			//Node already in list
+			Node* list_node; list_node->next = NULL; list_node->value = list_entry;
+
+			//Make the list with a single node
+			List* test_list; test_list->head = list_node; test_list->tail = list_node; test_list->length = 1;
+
+
+			int test_index = 1;
+			bool deleted = delete(test_list, 1);
+
+			Assert::AreEqual(true, deleted);
 		}
 
 		TEST_METHOD(free_list_test)
