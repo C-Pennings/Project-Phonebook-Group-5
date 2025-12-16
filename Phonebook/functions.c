@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "input.h"
+#include <stdio.h>
+#include "File_io.h"
 #include <ctype.h>
 
 // Use Everytime when creating any Entry for consistency
@@ -211,12 +213,13 @@ void init_list(List* list) {
 }
 
 //
-bool A_Contains_B(String* string_one, char* string_two) {
-    
-    if (!string_one|| !string_two) {
+bool A_Contains_B(String* string_one, String* string_two) {
+    char* word = string_one->data;
+    char* word_two = string_two->data;
+    if (!word|| !word_two) {
        return false;
     }
-    return strstr(string_one->data, string_two) != NULL;
+    return strstr(word, word_two) != NULL;
 
 }
 void search_all(List* list,List* temp, String* value, String* type) {
@@ -253,7 +256,7 @@ void free_temp_list(List* list) {
    list->tail = NULL;
    list->length = 0;
 }
-bool con_run() {
+bool con_run() { //continue to run
 
     printf("press 1 to continue,press 2 to return to menu\n");
     int input = input_number(1, 2);
@@ -262,6 +265,52 @@ bool con_run() {
     }
     return false;
 }
+void load_entries(List* list,FILE* file) {
+    char line[1024];
+        while (fgets(line, sizeof(line), file) != NULL) {
+            char *temp_name = read_x_data(line,0);
+            char *temp_number= read_x_data(line, 1);
+            String *contact_name = create_string(temp_name);
+            String *contact_number = create_string(temp_number);
+
+            if (!contact_name || !contact_number) {
+                free(contact_name);
+                free(contact_number);
+                continue;
+            }
+            Entry* new_contact = create_entry(contact_name, contact_number);
+            append(list, new_contact);
+        
+        }
+}
+void save_contacts(List*list,FILE* file) {
+    for (int i = 1; i <= list->length; i++) {
+        Entry* display_node = step_node(list->head, i - 1);
+        char* name = display_node->name->data;
+        char* number = display_node->phone_number->data;
+        fprintf(file, "%s, %s\n",name,number);
+    }
+
+}
+String* create_string(char* word) {
+    {
+        if (!word) return NULL;
+
+        String* str = (String*)malloc(sizeof(String));
+        if (!str) return NULL;
+
+        str->length = (int)strlen(word);
+
+        str->data = (char*)malloc(str->length + 1);
+        if (!str->data) {
+            free(str);
+            return NULL;
+        }
+
+        strcpy_s(str->data, str->length + 1, word);
+
+        return str;
+    }
 
 bool checkString(String* str, String* pattern){
     if (!str || !pattern) {

@@ -20,6 +20,18 @@ int main() {
 	}
 	init_list(contact_list);
 	init_list(temp_list);
+	
+
+	FILE* contact_log = open_mode("contact_log.txt", "r");
+	if (contact_log) {
+		load_entries(contact_list, contact_log);
+		fclose(contact_log);
+	}
+	else {
+		//fclose(contact_log);
+	}
+	
+	//load_entries(contact_log, contact_list);
 
 	//Begin main program loop.
 	bool continue_program = true;
@@ -318,8 +330,19 @@ int main() {
 				break;
 		}
 	}
+	contact_log = open_mode("contact_log.txt", "w");
+	if (contact_log) {
+		save_contacts(contact_list,contact_log);
+		fclose(contact_log);
+	}
+	else {
+		//fclose(contact_log);
+	}
 
 	//Go through the contact list and free all allocated memory.
 	free_list(contact_list);
+	free(contact_list);
+	free_list(temp_list);
+	free(temp_list);
 	return 0;
 }
