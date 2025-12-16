@@ -20,3 +20,5 @@ void load_entries(List*, FILE*);
 void save_contacts(List* list, FILE* file);
 bool con_run();
 String *create_string(char*);
+bool checkString(String* str, String* pattern);
+bool con_run();
