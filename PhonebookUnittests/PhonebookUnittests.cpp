@@ -265,7 +265,12 @@ namespace PhonebookUnittests
 
 		TEST_METHOD(A_Contains_B_test)
 		{
+			String* string1; string1->data = "Hello"; string1->length = sizeof(string1->data);
+			String* string2; string2->data = "el"; string2->length = sizeof(string2->data);
 
+			bool test_check = A_Contains_B(string1, string2);
+
+			Assert::AreEqual(true, test_check);
 		}
 
 		TEST_METHOD(search_all_test)
