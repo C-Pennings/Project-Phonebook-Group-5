@@ -16,7 +16,17 @@ namespace PhonebookUnittests
 		
 		TEST_METHOD(create_entry_test)
 		{
+			struct String* name;
+			name->data = "Ted";
+			name->length = sizeof(name->data);
+			struct String* phone_number;
+			phone_number->data = "123";
+			phone_number->length = sizeof(phone_number->data);
 
+			struct Entry* test_entry = create_entry(name, phone_number);
+
+			Assert::AreEqual("Ted", test_entry->name->data);
+			Assert::AreEqual("123", test_entry->phone_number->data);
 		}
 
 		TEST_METHOD(append_test)
